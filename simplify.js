@@ -16,7 +16,6 @@ async function preprocessFolderImages(inputFolder, outputFolder) {
         const inputFilePath = path.join(inputFolder, file);
         const outputFilePath = path.join(outputFolder, file + '.bin');
 
-        // Resize to 32x32, grayscale, and remove alpha channel, then get raw pixel data
         const processedImage = await sharp(inputFilePath)
             .resize(64, 64, { fit: 'fill' })
             .grayscale()
