@@ -1,113 +1,107 @@
-const sharp = require('sharp');
+const sharp = require(
+    process.argv.includes('--old') || process.argv.includes('--legacy') || process.argv.includes('-l') || process.argv.includes('-o') 
+    ? 'sharp-legacy' 
+    : 'sharp'
+);
 const axios = require('axios');
 const fs = require('fs');
 const path = require('path');
-
-// Helper to fetch and process image from URL
+const logger = require('./logger.js');
+const config = require('../config.js')
+/**
+ * Fetches and processes the image for comparison.
+ * @param {String} url
+ * @returns {Buffer} Processed image buffer
+ */
 async function fetchAndProcessImage(url) {
     try {
         const response = await axios.get(url, { responseType: 'arraybuffer' });
         const imageBuffer = Buffer.from(response.data, 'binary');
-        
+
         return sharp(imageBuffer)
-            .resize(32, 32)
+            .resize(64, 64, { fit: 'fill' })
             .grayscale()
             .removeAlpha()
             .raw()
             .toBuffer();
     } catch (error) {
-        console.error('Error fetching image:', error);
+        logger.error('Error fetching image:', error);
         throw error;
     }
 }
 
-// Lazy load preprocessed images one by one to reduce memory pressure
+/**
+ * Loads preprocessed images lazily from a folder.
+ * @param {String} folderPath
+ * @returns {Generator} Lazy-loaded images
+ */
 function* loadPreprocessedImagesLazy(folderPath) {
     const folderFiles = fs.readdirSync(folderPath);
-    // Support for both .jpg.bin and .png.bin files
     const files = folderFiles.filter(file => file.endsWith('.jpg.bin') || file.endsWith('.png.bin'));
     for (const file of files) {
         const filePath = path.join(folderPath, file);
         const buffer = fs.readFileSync(filePath);
-        yield { filename: file, buffer };  // Lazy loading using generator
+        yield { filename: file, buffer };
     }
 }
 
-// Efficient pixel-wise difference calculation using Buffer's built-in methods
-function calculateDifference(buffer1, buffer2) {
+/**
+ * Calculates the Mean Squared Error (MSE) between two buffers.
+ * @param {Buffer} buffer1
+ * @param {Buffer} buffer2
+ * @returns {Number} Mean Squared Error
+ */
+function calculateMSE(buffer1, buffer2) {
     const view1 = new Uint8Array(buffer1);
     const view2 = new Uint8Array(buffer2);
 
-    let totalDifference = 0;
+    let mse = 0;
     for (let i = 0; i < view1.length; i++) {
-        totalDifference += Math.abs(view1[i] - view2[i]);
+        const diff = view1[i] - view2[i];
+        mse += diff * diff;
     }
-
-    return totalDifference;
+    return mse / view1.length;
 }
 
-// Compare with batched processing to avoid memory spikes
-async function compareWithFolderImages(url, maxDifference = 500) {
+/**
+ * Compares an image URL against preprocessed images and finds the closest match.
+ * @param {String} url
+ * @param {Number} maxMSE Threshold for acceptable match
+ * @returns {String|Boolean} Best matching image filename or false if no match
+ */
+async function compareWithFolderImages(url, maxMSE = 1000) {
     try {
         const fetchedImage = await fetchAndProcessImage(url);
         const preprocessedImages = [
-            ...loadPreprocessedImagesLazy('./balls/main'), 
+            ...loadPreprocessedImagesLazy('./balls/main'),
             ...loadPreprocessedImagesLazy('./balls/temp'),
             ...loadPreprocessedImagesLazy('./balls/additionals')
-        ]
+        ];
 
         let bestMatch = null;
-        let bestDifference = Infinity;
-
-        // Lazy load images and process in small batches
-        let batchSize = 3;
-        let currentBatch = [];
+        let bestMSE = Infinity;
 
         for (const preprocessed of preprocessedImages) {
-            currentBatch.push(preprocessed);
+            const mse = calculateMSE(fetchedImage, preprocessed.buffer);
 
-            if (currentBatch.length === batchSize) {
-                // Process the current batch
-                currentBatch.forEach(preprocessed => {
-                    const difference = calculateDifference(fetchedImage, preprocessed.buffer);
-
-                    // Early exit on a near-perfect match
-                    if (difference < maxDifference) {
-                        console.log(`Early exit: ${preprocessed.filename} with a difference of ${difference}`);
-                        return preprocessed.filename;
-                    }
-
-                    if (difference < bestDifference) {
-                        bestDifference = difference;
-                        bestMatch = preprocessed.filename;
-                    }
-                });
-
-                // Clear the batch to free up memory
-                currentBatch = [];
+            if (mse < bestMSE) {
+                bestMSE = mse;
+                bestMatch = preprocessed.filename;
             }
         }
-
-        // Process the remaining images (if any)
-        if (currentBatch.length > 0) {
-            currentBatch.forEach(preprocessed => {
-                const difference = calculateDifference(fetchedImage, preprocessed.buffer);
-
-                if (difference < maxDifference) {
-                    console.log(`Early exit: ${preprocessed.filename} with a difference of ${difference}`);
-                    return preprocessed.filename;
-                }
-
-                if (difference < bestDifference) {
-                    bestDifference = difference;
-                    bestMatch = preprocessed.filename;
-                }
-            });
+        if (bestMSE > maxMSE) {
+            logger.info(`Tried to ignore ball with mse: ${bestMSE}, ${bestMatch}`);
+            if (config.forceReturnBestMatch) {
+                return bestMatch;
+            } else {
+                return false;
         }
-
-        return bestMatch;  // Return the best match after all comparisons
+} else {
+    return bestMatch;
+}
     } catch (error) {
-        console.error('Error during comparison:', error);
+        logger.error('Error during comparison:', error);
+        throw error;
     }
 }
 
