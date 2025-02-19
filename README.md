@@ -18,12 +18,12 @@
 </div>
 <br>
 
-The first Ballsdex AutoCatcher selfbot that went public in github 😁. written in **[JavaScript](https://www.javascript.com)** with 💖 by me, powered by **[discord.js-selfbot-v13](https://github.com/aiko-chan-ai/discord.js-selfbot-v13)** module written by **[akio-chan-ai](https://github.com/aiko-chan-ai/discord.js-selfbot-v13)** for simplifying the progress of making a discord selfbot.<br><br>Contact sextynine on discord if u had any questions<br><br>Visit our website [here](https://autocatcher.xyz)
+The first FOOTDEX AutoCatcher selfbot that went public in github 😁. written in **[JavaScript](https://www.javascript.com)** with 💖 by me, powered by **[discord.js-selfbot-v13](https://github.com/aiko-chan-ai/discord.js-selfbot-v13)** module written by **[akio-chan-ai](https://github.com/aiko-chan-ai/discord.js-selfbot-v13)** for simplifying the progress of making a discord selfbot.<br><br>Contact depreciating on discord if u had any questions<br>
 
 
 <h2 align="center" >⚠ Terms of using this code</h2>
 
-**This repository/project is under GNU GENERAL PUBLIC licence, if you are using it please leave a watermark to me.** [github.com/mohammad87115](https://github.com/mohammad87115)
+**This repository/project is under GNU GENERAL PUBLIC licence, if you are using it please leave a watermark to me.**
 
 <h2 align="center">💀 Important Warning</h2>
 
@@ -63,20 +63,5 @@ Now run the following commands in the terminal.
 node index.js
 ```
 
-Now wait for the text (USERNAME is ready) and then your selfbot is online and catching countryballs automatically.<br>
+Now wait for the text (USERNAME is ready) and then your selfbot is online and catching footdexs automatically.<br>
 Dont forget to star ⭐
-
-<h1 align="center">💡 How to Farm Balls with 100% Efficiency and 100% Safety</h1>
-
-1. Create an alternate Discord account (alt).
-2. Set up 100 servers using the following template:
-   - **Name**: "Farm Server"
-   - **Channels**: "General"
-3. Add the Ballsdex bot, 3 bots from [Shapes Inc](https://platform.shapes.inc/) (The server count must be at least 5)
-4. Join all 100 servers with your main account.
-5. Configure Ballsdex and activate the Shape Inc bots to send messages in the channel whenever you send a message.
-6. In the autocatcher's config, set "Farm Server" as the target for farming.
-7. Run the autocatcher.
-(It's important to note that the servers need to be 5 days old before ballsdex will start spawning fast)
-
-With this setup, you can farm countryballs efficiently and safely!
