@@ -1,6 +1,6 @@
 <h1 align="center" >⚽ FOOTDEX AutoCatcher ⚽</h1>
 <div align="center">
-  <img src="https://curefras.sirv.com/9263564.jpg" herf="https://autocatcher.xyz">
+  <img src="https://cdn.discordapp.com/avatars/1270666441758216262/ece6309bad31974837d0d5ca1128862e.webp?size=2048">
 </div>
 <br><br>
 <div align="center">
