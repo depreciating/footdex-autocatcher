@@ -13,7 +13,7 @@ The first FOOTDEX AutoCatcher selfbot that went public in github 😁. written i
 
 <h2 align="center" >🚨 IMPORTANT 🚨</h2>
 
-**To acknowledge the hard work of MikeDTaro, I will not be sharing the full source code, including the preprocessed images, which are essential for the code. If you have the ability, you are welcome to generate them yourself, but I will not be providing any assistance. This is solely for my own learning purposes.**
+**To acknowledge the hard work of [MikeDTaro](https://github.com/MikeDTaro), I will not be sharing the full source code, including the preprocessed images, which are essential for the code. If you have the ability, you are welcome to generate them yourself, but I will not be providing any assistance. This is solely for my own learning purposes.**
 
 <h2 align="center">💀 Important Warning</h2>
 
