@@ -4,7 +4,7 @@
 </div>
 
 
-The first FOOTDEX AutoCatcher selfbot that went public in github 😁. written in **[JavaScript](https://www.javascript.com)** with 💖 by me, powered by **[discord.js-selfbot-v13](https://github.com/aiko-chan-ai/discord.js-selfbot-v13)** module written by **[akio-chan-ai](https://github.com/aiko-chan-ai/discord.js-selfbot-v13)** for simplifying the progress of making a discord selfbot.<br><br>Contact depreciating on discord if you have any questions.<br>
+The first FOOTDEX AutoCatcher selfbot that went public in github 😁. written in **[JavaScript](https://www.javascript.com)** with 💖 by me, powered by **[discord.js-selfbot-v13](https://github.com/aiko-chan-ai/discord.js-selfbot-v13)** module written by **[akio-chan-ai](https://github.com/aiko-chan-ai/discord.js-selfbot-v13)** for simplifying the progress of making a discord selfbot.<br><br>[Click here](https://discord.com/users/739109265649696849) to contact me (depreciating) on discord if you have any questions.<br>
 
 
 <h2 align="center" >⚠ Terms of using this code</h2>
