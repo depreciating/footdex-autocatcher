@@ -59,3 +59,5 @@ node index.js --legacy
 ```
 Now wait for the text (USERNAME is ready) and then your selfbot is online and catching countryballs automatically.<br>
 Dont forget to star ⭐
+
+Forked from [BallsDex AutoCatcher](https://github.com/ballsdex-autocatcher/ballsdex-autocatcher).
